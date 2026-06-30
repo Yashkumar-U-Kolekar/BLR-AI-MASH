@@ -1,0 +1,335 @@
+/* ═══════════════════════════════════════════════════════════════
+   Agent Banner & Sidebars Overlay Styling
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Desktop Vertical Sidebars (min-width: 1200px) ──────────── */
+.agent-side-marquee-desktop {
+    display: none;
+}
+
+@media (min-width: 1200px) {
+    .agent-side-marquee-desktop {
+        display: block;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 160px; /* Increased sidebar width to hold larger images and text */
+        z-index: 9999;
+        pointer-events: none; /* Let page scrolls/clicks pass through empty gaps */
+        transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .agent-side-marquee-desktop.left.shifted {
+        transform: translateX(-50%);
+    }
+
+    .agent-side-marquee-desktop.right.shifted {
+        transform: translateX(50%);
+    }
+
+    .agent-side-marquee-desktop.left {
+        left: 24px;
+    }
+
+    .agent-side-marquee-desktop.right {
+        right: 24px;
+    }
+
+    .agent-sidebar-track-container {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+    }
+
+    /* Vertical edge fading to smoothly dissolve elements at top and bottom edges */
+    .agent-sidebar-track-container::before,
+    .agent-sidebar-track-container::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 160px;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    .agent-sidebar-track-container::before {
+        top: 0;
+        background: linear-gradient(to bottom, #FFFFFF 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%);
+    }
+
+    .agent-sidebar-track-container::after {
+        bottom: 0;
+        background: linear-gradient(to top, #FFFFFF 0%, rgba(255, 255, 255, 0.8) 40%, transparent 100%);
+    }
+
+    .agent-sidebar-track {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        display: flex;
+        flex-direction: column;
+        gap: 75px; /* Adjusted gap for larger items */
+        width: 100%;
+        align-items: center;
+        pointer-events: auto; /* Re-enable pointer events for hover states */
+        transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth transition when snapping */
+    }
+
+    .agent-sidebar-track.scroll-down {
+        animation: agentScrollDown 28s linear infinite;
+    }
+
+    .agent-sidebar-track.scroll-up {
+        animation: agentScrollUp 28s linear infinite;
+    }
+
+    .agent-sidebar-track:hover {
+        animation-play-state: paused;
+    }
+
+    .agent-sidebar-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        width: 100%;
+        height: 240px;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        animation: agentBobSidebar 4s ease-in-out infinite;
+        position: relative;
+        border-radius: 12px;
+        outline: none;
+    }
+
+
+    .agent-sidebar-item:hover {
+        transform: scale(1.15) !important;
+    }
+
+    .agent-sidebar-item:active {
+        transform: scale(1.08) !important;
+    }
+
+    .agent-sidebar-item:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 4px;
+    }
+
+    .agent-sidebar-img {
+        height: 180px;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 8px 20px rgba(16, 185, 129, 0.16)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+        transition: filter 0.3s ease;
+    }
+
+    .agent-sidebar-item:hover .agent-sidebar-img {
+        filter: drop-shadow(0 10px 24px rgba(16, 185, 129, 0.32)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+    }
+
+    .agent-sidebar-name {
+        font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        color: var(--text-primary);
+        text-align: center;
+        white-space: nowrap;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        transition: color 0.3s ease;
+    }
+
+    .agent-sidebar-item:hover .agent-sidebar-name {
+        color: var(--accent);
+    }
+}
+
+/* ─── Mobile Bottom Marquee (max-width: 1199px) ──────────────── */
+.agent-banner-overlay-mobile {
+    display: none;
+}
+
+@media (max-width: 1199px) {
+    .agent-banner-overlay-mobile {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 160px;
+        background: transparent;
+        z-index: 9999;
+        align-items: center;
+        padding: 0 16px;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .agent-banner-track-container-mobile {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        position: relative;
+        height: 100%;
+    }
+
+    .agent-banner-track-container-mobile::before,
+    .agent-banner-track-container-mobile::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 60px;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .agent-banner-track-container-mobile::before {
+        left: 0;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.95), transparent);
+    }
+
+    .agent-banner-track-container-mobile::after {
+        right: 0;
+        background: linear-gradient(to left, rgba(255, 255, 255, 0.95), transparent);
+    }
+
+    .agent-banner-track-mobile {
+        display: flex;
+        gap: 54px; /* Balanced mobile gap */
+        width: max-content;
+        animation: agentScrollHorizontalMobile 40s linear infinite;
+        pointer-events: auto;
+        align-items: center;
+        transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .agent-banner-track-mobile:hover {
+        animation-play-state: paused;
+    }
+
+    .agent-banner-item-mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        animation: agentBobMobile 4s ease-in-out infinite;
+        position: relative;
+        outline: none;
+    }
+
+
+    .agent-banner-item-mobile:hover {
+        transform: scale(1.15) translateY(-6px) !important;
+    }
+
+    .agent-banner-item-mobile:active {
+        transform: scale(1.05) translateY(-3px) !important;
+    }
+
+    .agent-banner-item-mobile:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 4px;
+        border-radius: 8px;
+    }
+
+    .agent-banner-img-mobile {
+        height: 104px;
+        width: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 6px 12px rgba(16, 185, 129, 0.15)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+        transition: filter 0.3s ease;
+    }
+
+    .agent-banner-item-mobile:hover .agent-banner-img-mobile {
+        filter: drop-shadow(0 8px 20px rgba(16, 185, 129, 0.28)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+    }
+
+    .agent-banner-name-mobile {
+        font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: var(--text-primary);
+        white-space: nowrap;
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        transition: color 0.3s ease;
+    }
+
+    .agent-banner-item-mobile:hover .agent-banner-name-mobile {
+        color: var(--accent);
+    }
+}
+
+/* ─── Scroll & Bobbing Keyframes ─────────────────────────────── */
+
+/* Vertical scroll down */
+@keyframes agentScrollDown {
+    0% {
+        transform: translate(-50%, calc(-33.333% - 25px)); /* accounting for 3 copies & 75px gap */
+    }
+    100% {
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Vertical scroll up */
+@keyframes agentScrollUp {
+    0% {
+        transform: translate(-50%, 0);
+    }
+    100% {
+        transform: translate(-50%, calc(-33.333% - 25px)); /* accounting for 3 copies & 75px gap */
+    }
+}
+
+/* Mobile horizontal loop marquee animation */
+@keyframes agentScrollHorizontalMobile {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-33.333% - 18px)); /* accounting for 3 copies & 54px gap */
+    }
+}
+
+/* Sidebar bobbing animation delay offset logic is injected inline */
+@keyframes agentBobSidebar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes agentBobMobile {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+/* ─── Global Padding Adjustments ─────────────────────────────── */
+body {
+    padding-bottom: 0 !important; /* Reset bottom space on desktop since marquees are on the sides */
+}
+
+@media (max-width: 1199px) {
+    body {
+        padding-bottom: 160px !important; /* Pad bottom content for horizontal marquee overlay on mobile */
+    }
+}

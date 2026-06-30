@@ -1,0 +1,231 @@
+/* ═══════════════════════════════════════════════════════════════
+   Gallery — Masonry Editorial
+   ═══════════════════════════════════════════════════════════════ */
+
+.gallery {
+    background: var(--bg-primary);
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.gallery-heading {
+    font-size: clamp(36px, 5vw, 56px);
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.1;
+}
+
+.gallery-sub {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ─── Uniform Grid ────────────────────────────────────────────── */
+.gallery-masonry {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    aspect-ratio: 1/1;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background-color: var(--bg-primary);
+    display: block;
+    transition: transform var(--transition-dramatic);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.06);
+}
+
+.gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.7) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.gallery-item:hover .gallery-item-overlay {
+    opacity: 1;
+}
+
+.gallery-item-label {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #FAFAFA;
+}
+
+/* ─── Load More ────────────────────────────────────────────────── */
+.gallery-load-more {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.gallery-load-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 12px 32px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.gallery-load-btn:hover {
+    border-color: var(--text-primary);
+    background: var(--bg-surface);
+}
+
+/* ─── Dashboard Panel ─────────────────────────────────────────── */
+.dashboard-panel {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 28px;
+    background: #FAFBFD;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+    min-height: 440px;
+}
+
+.dashboard-info-side {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dashboard-console {
+    background: #04070D;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: monospace;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.console-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.console-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+}
+
+.console-logs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 340px;
+    min-height: 240px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(16, 185, 129, 0.3) transparent;
+}
+
+.console-logs-container::-webkit-scrollbar {
+    width: 3px;
+}
+
+.console-logs-container::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.4);
+    border-radius: 2px;
+}
+
+.console-log-line {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #A5F3FC;
+}
+
+.console-footer {
+    font-size: 10px;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 8px;
+    text-align: right;
+    margin-top: 12px;
+}
+
+/* ─── Sidebar clearance on desktop ───────────────────────────── */
+@media (min-width: 1200px) {
+    .gallery .container {
+        padding-left: 200px;
+        padding-right: 200px;
+    }
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 992px) {
+    .dashboard-panel {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-masonry {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-masonry {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .gallery-item {
+        border-radius: var(--radius-sm);
+    }
+
+    .gallery-item-overlay {
+        padding: 12px;
+    }
+
+    .gallery-item-label {
+        font-size: 10px;
+    }
+}

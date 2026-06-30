@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Python virtual environments
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.rooms
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
+
+# Gemini / Agents config
+.gemini/
+.agents/
+agent_config.yaml
+
+# Misc
+stupidgit.txt

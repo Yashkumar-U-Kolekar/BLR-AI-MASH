@@ -1,0 +1,121 @@
+import { useState, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+import { useTheme } from './hooks/useTheme'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import About from './components/About'
+import Services from './components/Services'
+import Gallery from './components/Gallery'
+import Footer from './components/Footer'
+import LoadingScreen from './components/LoadingScreen'
+import AgentBanner from './components/AgentBanner'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+// Admin
+import { initializeStore } from './admin/data/store'
+import AdminLayout from './admin/AdminLayout'
+import Dashboard from './admin/pages/Dashboard'
+import Appointments from './admin/pages/Appointments'
+import Clients from './admin/pages/Clients'
+import ClientDetail from './admin/pages/ClientDetail'
+import AdminServices from './admin/pages/Services'
+import Staff from './admin/pages/Staff'
+import Settings from './admin/pages/Settings'
+import Billing from './admin/pages/Billing'
+import { InvoiceList, InvoiceDetail } from './admin/pages/Invoices'
+import Inventory from './admin/pages/Inventory'
+import Calendar from './admin/pages/Calendar'
+import Login from './admin/pages/Login'
+import ProtectedRoute from './admin/components/ProtectedRoute'
+
+// Initialize admin store with mock data on first load
+initializeStore()
+
+// Run: npm install @tanstack/react-query
+// Pages will be migrated to useQuery hooks when backend is connected
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
+    },
+  },
+})
+
+function LandingPage() {
+    const { theme, toggleTheme } = useTheme()
+    const [isLoading, setIsLoading] = useState(true)
+    const [activeAgent, setActiveAgent] = useState<string | null>(null)
+    const location = useLocation()
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false)
+        }, 2000)
+        return () => clearTimeout(timer)
+    }, [])
+
+    useEffect(() => {
+        if (!isLoading && location.hash) {
+            const el = document.querySelector(location.hash)
+            if (el) {
+                setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100)
+            }
+        }
+    }, [location.hash, isLoading])
+
+    return (
+        <>
+            <AnimatePresence>
+                {isLoading && <LoadingScreen key="loader" />}
+            </AnimatePresence>
+
+            <Navbar theme={theme} toggleTheme={toggleTheme} isAppLoading={isLoading} />
+            <main>
+                <Hero isAppLoading={isLoading} />
+                <About activeAgent={activeAgent} setActiveAgent={setActiveAgent} />
+                <Services activeAgent={activeAgent} setActiveAgent={setActiveAgent} />
+                <Gallery />
+            </main>
+            <Footer />
+            <AgentBanner activeAgent={activeAgent} />
+        </>
+    )
+}
+
+import Privacy from './components/Privacy'
+import Terms from './components/Terms'
+
+function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin" element={
+                <QueryClientProvider client={queryClient}>
+                    <ProtectedRoute>
+                        <AdminLayout />
+                    </ProtectedRoute>
+                </QueryClientProvider>
+            }>
+                <Route index element={<Dashboard />} />
+                <Route path="billing" element={<Billing />} />
+                <Route path="calendar" element={<Calendar />} />
+                <Route path="appointments" element={<Appointments />} />
+                <Route path="clients" element={<Clients />} />
+                <Route path="clients/:clientId" element={<ClientDetail />} />
+                <Route path="invoices" element={<InvoiceList />} />
+                <Route path="invoices/:invoiceId" element={<InvoiceDetail />} />
+                <Route path="services" element={<AdminServices />} />
+                <Route path="staff" element={<Staff />} />
+                <Route path="inventory" element={<Inventory />} />
+                <Route path="settings" element={<Settings />} />
+            </Route>
+        </Routes>
+    )
+}
+
+export default App

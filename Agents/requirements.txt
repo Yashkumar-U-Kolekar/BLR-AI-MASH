@@ -1,0 +1,9 @@
+# Python dependencies for Band of Agents
+band-sdk[langgraph]
+python-dotenv
+pyyaml
+pydantic
+langchain-google-genai
+fastapi
+uvicorn
+armoriq-sdk
