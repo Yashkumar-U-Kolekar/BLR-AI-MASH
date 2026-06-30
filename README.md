@@ -1,4 +1,4 @@
-# M.A.S.H (Multi-Agent System for Healthcare)
+# M.A.S.H (Medical Assistant and Services Hub)
 
 Welcome to the **M.A.S.H (CarePulse)** repository! This project is a comprehensive, AI-driven healthcare platform designed to streamline operations for patients, doctors, pharmacists, and administrators. It features multi-agent AI chatbots, real-time indoor navigation, seamless appointment booking, live inventory tracking, and cutting-edge security via ArmorIQ.
 
